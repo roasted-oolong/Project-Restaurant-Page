@@ -6,24 +6,23 @@ import { loadAbout } from "./about.js";
 
 console.log(greeting)
 
-const content = document.getElementById('content');
-const navs = document.querySelectorAll('header nav');
+function setupTabNavigation() {
+    const content = document.getElementById('content');
+    const navs = document.querySelectorAll('header nav');
+    const loaders = [loadHomepage, loadMenu, loadAbout];
 
-if (navs.length >= 3) {
-  navs[0].addEventListener('click', () => {
+    navs.forEach((nav, idx) => {
+        if (loaders[idx]) {
+            nav.addEventListener('click', () => {
+                content.innerHTML = '';
+                loaders[idx]();
+            });
+        }
+    });
+
+    // Load default tab
     content.innerHTML = '';
     loadHomepage();
-  });
-  navs[1].addEventListener('click', () => {
-    content.innerHTML = '';
-    loadMenu();
-  });
-  navs[2].addEventListener('click', () => {
-    content.innerHTML = '';
-    loadAbout();
-  });
 }
 
-// Load default tab
-content.innerHTML = '';
-loadHomepage();
+setupTabNavigation();
