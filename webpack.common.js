@@ -7,26 +7,26 @@
    entry: {
      app: './src/index.js',
    },
-   plugins: [
-     new HtmlWebpackPlugin({
-       title: 'Production',
-     }),
-   ],
    output: {
      filename: '[name].bundle.js',
      path: path.resolve(__dirname, 'dist'),
      clean: true,
    },
-    plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/template.html",
-    }),
-  ],
-  module: {
+   plugins: [
+     new HtmlWebpackPlugin({
+       title: 'Production',
+       template: "./src/template.html",
+     }),
+     new MiniCssExtractPlugin({
+       filename: '[name].css',
+       chunkFilename: '[id].css',
+     }),
+   ],
+   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
